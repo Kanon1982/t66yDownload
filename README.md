@@ -14,14 +14,14 @@
    本脚本是默认是Firefox Mozilla浏览器，如需使用其他浏览器，请修改 `main.py` 第 `29` 行
    
    Chrome浏览器
-```yaml
-driver = webdriver.Chrome()
-```
+  ```yaml
+  driver = webdriver.Chrome()
+  ```
    
    Chromium Edge浏览器
-```yaml
-driver = webdriver.Edge("这里写Edge WebDriver路径")
-```
+  ```yaml
+  driver = webdriver.Edge("这里写Edge WebDriver路径")
+  ```
    
    
 3. 脚本在执行的过程中，需要 `全程外网` 环境(因为草榴只有在外网才可以访问)
