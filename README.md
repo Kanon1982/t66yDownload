@@ -13,12 +13,12 @@
 2. 需要根据自己的浏览器的 `类型` 和 `版本` 下载相应的 `webdriver驱动`，并且放在python解释器的 `根目录`
    本脚本是默认是Firefox Mozilla浏览器，如需使用其他浏览器，请修改 `main.py` 第 `29` 行
    
-   Chrome浏览器
+Chrome浏览器
   ```yaml
   driver = webdriver.Chrome()
   ```
    
-   Chromium Edge浏览器
+Chromium Edge浏览器
   ```yaml
   driver = webdriver.Edge("这里写Edge WebDriver路径")
   ```
