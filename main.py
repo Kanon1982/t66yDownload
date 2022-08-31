@@ -124,9 +124,16 @@ def download_func():
             windows = driver.window_handles
             driver.switch_to.window(windows[-1])
 
-            driver.implicitly_wait(20)
-            driver.find_element(By.CSS_SELECTOR, 'a[href^="http://www.rmdown.com/link.php?hash="]').click()
-            driver.implicitly_wait(20)
+            try:
+                driver.implicitly_wait(20)
+                driver.find_element(By.CSS_SELECTOR, 'a[href*="rmdown.com/link.php?hash="]').click()
+                driver.implicitly_wait(20)
+            except Exception as e:
+                print("报错：", e)
+                windows = driver.window_handles
+                driver.close()
+                driver.switch_to.window(windows[0])
+                continue
 
             windows = driver.window_handles
             driver.switch_to.window(windows[-1])
