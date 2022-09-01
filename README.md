@@ -30,4 +30,4 @@
 
 
 
-使用时，使用`python解释器`或者`pycharm`运行main.py文件即可
+使用时，使用`pycharm`运行main.py文件即可
