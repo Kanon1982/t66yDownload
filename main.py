@@ -15,6 +15,10 @@ download_max = 10000  # 最大可选的访问量
 total_page_num_min = 1  # 最少下载页数(含该页数)
 total_page_num_max = 15  # 最大下载页数(含该页数)
 
+# 注意：等待时长不可以删除，否则会被网站发现是机器人，导致报错
+implicitly_wait_time = 30 # 隐式等待时长
+sleep_wait_time = 3 # 强制等待时长
+
 
 """
     置顶异常，用于后续可能出现的报错
@@ -26,7 +30,7 @@ class ValueTooSmallOrBig(Exception):
 """
     选择区域模块
 """
-driver = webdriver.Firefox()
+driver = webdriver.Chrome()
 driver.get("https://t66y.com/index.php")  # 登录 t66y.com 主页
 
 choice = "1"  # 选择主题区域的默认值为 "1"
@@ -78,6 +82,20 @@ while True:  # 判断输入的浏览量是否合法
         print("输入的并非数字！！！")
         print(e.args)
 
+"""
+    是否下载破坏版
+"""
+
+down_break = False    # 是否下载破坏版 默认：不下载
+while True:
+    down_break_str = input("是否下载破坏(破解)版? (y/n)")
+    if down_break_str.strip().upper() == "Y":
+        down_break = True
+        break
+    elif down_break_str.strip().upper() == "N":
+        break
+    else:
+        print('您的输入有误，请重新输入！！！')
 
 """
     要下载前多少页的bt种子
@@ -105,7 +123,8 @@ def download_func():
     下载符合规则的bt种子方法
     """
 
-    driver.implicitly_wait(20)  # 等待页面加载完成 不可以删除~~
+    driver.implicitly_wait(implicitly_wait_time)  # 等待页面加载完成 不可以删除~~
+    time.sleep(sleep_wait_time)
 
     down_td_s = driver.find_elements(By.CSS_SELECTOR, "#tbody tr td:nth-child(5)")
 
@@ -113,21 +132,30 @@ def download_func():
     tr_num_list = list()
 
     for down_td in down_td_s:
-        if down_td.text == '--':
+        if down_td.text == '--':    # 如果没有下载量，跳过该次循环
             continue
-        down_count = int(down_td.text)
 
+        down_count = int(down_td.text)  # 获取当前种子下载量
         if down_count >= download_input:
-            down_tr = down_td.find_element(By.XPATH, "..")
-            down_tr.find_element(By.XPATH, "./td[2]/h3/a").click()
+
+            down_tr = down_td.find_element(By.XPATH, "..")      # 获取该行的tr元素
+            bt_title_tag = down_tr.find_element(By.XPATH, "./td[2]/h3/a") # 获取种子title的a标签
+
+            # 看标题a标签中是否包含"破解"或"破坏" 并且 是否设置过下载破解版，有则跳过该行，无则点击
+            if (not down_break) and (("破解" or "破坏") in bt_title_tag.text):
+                continue
+            else:
+                bt_title_tag.click()
 
             windows = driver.window_handles
             driver.switch_to.window(windows[-1])
 
             try:
-                driver.implicitly_wait(20)
+                driver.implicitly_wait(implicitly_wait_time)
+                time.sleep(sleep_wait_time)
                 driver.find_element(By.CSS_SELECTOR, 'a[href*="rmdown.com/link.php?hash="]').click()
-                driver.implicitly_wait(20)
+                driver.implicitly_wait(implicitly_wait_time)
+                time.sleep(sleep_wait_time)
             except Exception as e:
                 print("报错：", e)
                 windows = driver.window_handles
@@ -138,7 +166,8 @@ def download_func():
             windows = driver.window_handles
             driver.switch_to.window(windows[-1])
 
-            driver.implicitly_wait(20)
+            driver.implicitly_wait(implicitly_wait_time)
+            time.sleep(sleep_wait_time)
             driver.find_element(By.CSS_SELECTOR, 'button[title="Download file"]').click()
             driver.close()
 
