@@ -12,6 +12,8 @@
   
 2. 需要根据自己的浏览器的 `类型` 和 `版本` 下载相应的 `webdriver驱动`，并且放在python解释器的 `根目录`
    本脚本是默认是`Chrome`浏览器，如需使用其他浏览器，请修改 `main.py` 第 `33` 行
+   
+   
    [Web Driver下载使用说明地址](https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/)
    
    
