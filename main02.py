@@ -184,16 +184,25 @@ def download_1_page_by_day_func(download_input, down_break, days_list):
     download_input: 要高于多少下载量才下载？
     down_break: 是否下载 破坏 or 破解 版bt？
     days_list: 需要下载前多少天？的 字符串列表
-    :return: is_next_page
+    :return: is_next_page: 是否继续下一页
     """
     driver.implicitly_wait(implicitly_time)  # 等待页面加载完成 不可以删除~~
     time.sleep(sleep_time)
 
     down_tr_s = driver.find_elements(By.CSS_SELECTOR, "#tbody tr")  # 获取每一行的tr
 
-    tr_num = 1  # 行号计数器，用于下面的for循环
-    is_next_page = False   # 是否整页内容没有该日期的tr，作为flag使用
+    is_next_page = True   # 是否继续下一页
 
+    temp_num = 1    # 行号计数器，用于下面for循环
+    for down_tr in down_tr_s:
+        bt_day_tag = down_tr.find_element(By.XPATH, "./td[3]/div/span")  # 获取种子日期标签
+        if temp_num >= page_tr_max:
+            for day_str in days_list:  # 遍历整个 日期列表 ，查找该行的发布日期是否符合日期列表中内容
+                if bt_day_tag.text.find(day_str) == -1:  # 如果改行tr符合要查找的日期
+                    is_next_page = False
+        temp_num += 1
+
+    tr_num = 1  # 行号计数器，用于下面的for循环
     for down_tr in down_tr_s:       # 遍历每一个 tr 标签
         down_num_td = down_tr.find_element(By.XPATH, "./td[5]")  # 获取下载量td元素
         bt_title_tag = down_tr.find_element(By.XPATH, "./td[2]/h3/a")  # 获取种子title的a标签
@@ -212,60 +221,59 @@ def download_1_page_by_day_func(download_input, down_break, days_list):
             tr_num += 1
             continue
 
+        is_include_the_day = False  # 是否包含种子当天
         for day_str in days_list:       # 遍历整个 日期列表 ，查找该行的发布日期是否符合日期列表中内容
             if bt_day_tag.text.find(day_str) != -1:       # 如果改行tr符合要查找的日期
-
-                # 显示bt种子的详细信息
-                print(down_num_td.text)
-                print(bt_title_tag.text)
-                print(bt_day_tag.text)
-
-                bt_title_tag.click()        # 进入视频介绍详情页
-
-                is_next_page = True       # 只要整页有一个日期符合的，该变量为False
-
-                windows = driver.window_handles
-                driver.switch_to.window(windows[-1])
-
-                try:
-                    driver.implicitly_wait(implicitly_time)
-                    time.sleep(sleep_time)
-                    click_ele_s = driver.find_elements(By.CSS_SELECTOR, 'a[href*="rmdown.com/link.php?hash="]')
-                    click_ele_s[0].click()
-                    driver.implicitly_wait(implicitly_time)
-                    time.sleep(sleep_time)
-                except Exception as e:
-                    print("报错：", e)
-                    windows = driver.window_handles
-                    driver.close()
-                    driver.switch_to.window(windows[0])
-                    continue
-
-                windows = driver.window_handles
-                driver.switch_to.window(windows[-1])
-
-                driver.implicitly_wait(implicitly_time)
-                time.sleep(sleep_time)
-                driver.find_element(By.CSS_SELECTOR, 'button[title="Download file"]').click()
-                driver.close()
-
-                windows = driver.window_handles
-                driver.switch_to.window(windows[-1])
-                driver.close()
-
-                windows = driver.window_handles
-                driver.switch_to.window(windows[0])
-
-                print(f'{tr_num}----------{down_num_td.text}')  # 打印种子的真实下载数量
-
-
-
+                is_include_the_day = True
                 tr_num += 1     # 如果tr符合日期，则 行号flag增加
                 break
         else:
             tr_num += 1     # 如果tr找不到符合的日期，则 行号flag增加
+            continue
 
-        return is_next_page        # 返回 是否整页内容没有该日期的tr
+        if is_include_the_day:
+            # 显示bt种子的详细信息
+            print(down_num_td.text)
+            print(bt_title_tag.text)
+            print(bt_day_tag.text)
+
+            bt_title_tag.click()  # 进入视频介绍详情页
+
+            windows = driver.window_handles
+            driver.switch_to.window(windows[-1])
+
+            try:
+                driver.implicitly_wait(implicitly_time)
+                time.sleep(sleep_time)
+                click_ele_s = driver.find_elements(By.CSS_SELECTOR, 'a[href*="rmdown.com/link.php?hash="]')
+                click_ele_s[0].click()
+                driver.implicitly_wait(implicitly_time)
+                time.sleep(sleep_time)
+            except Exception as e:
+                print("报错：", e)
+                windows = driver.window_handles
+                driver.close()
+                driver.switch_to.window(windows[0])
+                continue
+
+            windows = driver.window_handles
+            driver.switch_to.window(windows[-1])
+
+            driver.implicitly_wait(implicitly_time)
+            time.sleep(sleep_time)
+            driver.find_element(By.CSS_SELECTOR, 'button[title="Download file"]').click()
+            driver.close()
+
+            windows = driver.window_handles
+            driver.switch_to.window(windows[-1])
+            driver.close()
+
+            windows = driver.window_handles
+            driver.switch_to.window(windows[0])
+
+            print(f'{tr_num}----------{down_num_td.text}')  # 打印种子的真实下载数量
+
+    return is_next_page        # 返回 是否整页内容没有该日期的tr
 
 
 
@@ -287,10 +295,10 @@ def download_by_day_func(download_input, down_break):
 
     # 本页是第几次
     page_num = 1    # 目前页数
-    flag = True     # 是否继续下一页
+
     while True:
-        flag = download_1_page_by_day_func(download_input, down_break, days_list)
-        print(flag)
+        is_next_page = download_1_page_by_day_func(download_input, down_break, days_list)
+        print(is_next_page)
 
         page_input = driver.find_element(By.CSS_SELECTOR, 'a[class="w70"] input')
         page_num += 1
@@ -300,8 +308,8 @@ def download_by_day_func(download_input, down_break):
         page_input.send_keys(Keys.ENTER)
         time.sleep(5)
 
-        print(flag)
-        if not flag:
+        print(is_next_page)
+        if not is_next_page:
             break
 
 # endregion    根据 页数 下载的方法: end
