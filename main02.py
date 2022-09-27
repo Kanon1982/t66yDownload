@@ -26,6 +26,9 @@ page_tr_max = 100  # 每页最多有多少行(tr)
 implicitly_time = 15  # 隐式等待时长
 sleep_time = 3  # 强制等待时长
 
+
+error_time = 3  # 在控制台输入错误后，等待的时长
+
 # web driver 驱动
 driver = webdriver.Chrome()
 driver.get("https://t66y.com/index.php")  # 登录 t66y.com 主页
@@ -90,7 +93,8 @@ def download_1_page_func(download_input, down_break):
             bt_title_tag = down_tr.find_element(By.XPATH, "./td[2]/h3/a")  # 获取种子title的a标签
 
             # 看标题a标签中是否包含"破解"或"破坏" 并且 是否设置过下载破解版，有则跳过该行，无则点击
-            if (not down_break) and (("破解" or "破坏") in bt_title_tag.text):
+            # 注意：这里的两个“破解”看上去相同，但是分别是 简体 和 繁体
+            if (not down_break) and (("破解" or "破坏" or "破壊" or "破解") in bt_title_tag.text):
                 continue
             else:
                 bt_title_tag.click()
@@ -154,56 +158,69 @@ def download_by_page_func(download_input, down_break):
 
 
 # region    根据 天数 下载的方法: begin
-def total_day_download_func():
+
+def get_download_days():
     """
-    要下载前多少天的bt种子？
-    :return: 返回天数
+    得到下载天数的方法
+    :return: 返回下载的天数
     """
-    total_day_download = 3  # 下载 前几天 的bt种子，默认 3 天
-    total_day_download_str = "3"
+    download_days = 3   # 默认为 3
+    download_days_str = "3"     # 默认为 3
     while True:
-        print(f'请输入要下载前几天的内容？({day_min}~{day_max}之间)')
-        total_day_download_str = input()
+        print(f'请输入要下载前几天的bt种子？({day_min}~{day_max}之间)')
+        download_days_str = input()      # 要下载的天数字符串
         try:
-            total_day_download = int(total_day_download_str)
-            if (total_day_download < day_min) or (total_day_download > day_max):
+            download_days = int(download_days_str)
+            if (download_days < day_min) or (download_days > day_max):
                 raise ValueTooSmallOrBig
             else:
-                break
+                return download_days
         except ValueTooSmallOrBig:
-            print(f'请输入({day_min}~{day_max}之间)的数字')
-        except Exception as e:
-            print('输入的并非数字！！！')
-            print(e.args)
-    return total_day_download
+            print(f'输入的数字不合法，应在{day_min}~{day_max}之间')
+        except Exception:
+            print('您输入的并非数字，请重新输入！！！')
+
+def get_days_list(download_days):
+    days_list = list()  # 日期str的列表
+    # 给 list 中添加 日期str
+    if download_days >= 1:
+        days_list.append("今天")
+    if download_days >= 2:
+        days_list.append("昨天")
+    if download_days >= 3:
+        day_flag = -2
+        while -day_flag + 1 <= download_days:
+            day_now_temp = (datetime.today() + timedelta(day_flag)).strftime('%Y-%m-%d')
+            days_list.append(day_now_temp)
+            print(type(day_now_temp))
+            day_flag -= 1
+
+    for day_str in days_list:
+        print(day_str)
 
 
-def download_1_page_by_day_func(download_input, down_break, days_list):
-    """
-    下载前多少天函数
-    download_input: 要高于多少下载量才下载？
-    down_break: 是否下载 破坏 or 破解 版bt？
-    days_list: 需要下载前多少天？的 字符串列表
-    :return: is_next_page: 是否继续下一页
-    """
+    return days_list
+
+def download_by_days_1_page(download_input, down_break, days_list):
+    keep_next_page = False  # 是否继续下一页？ 默认为False
+    # 获取最后一行的日期span元素
+    last_tr_span = driver.find_element(By.CSS_SELECTOR, "#tbody > tr:last-child td:nth-child(3) div span")
+    print(last_tr_span.text)    # 打印该页最后一行的发布日期
+
+    # 查看本页最后一行的日期，是否需要翻页
+    for day_str in days_list:
+        if last_tr_span.text.find(day_str) != -1:
+            keep_next_page = True
+
     driver.implicitly_wait(implicitly_time)  # 等待页面加载完成 不可以删除~~
     time.sleep(sleep_time)
 
     down_tr_s = driver.find_elements(By.CSS_SELECTOR, "#tbody tr")  # 获取每一行的tr
 
-    is_next_page = True   # 是否继续下一页
-
-    temp_num = 1    # 行号计数器，用于下面for循环
-    for down_tr in down_tr_s:
-        bt_day_tag = down_tr.find_element(By.XPATH, "./td[3]/div/span")  # 获取种子日期标签
-        if temp_num >= page_tr_max:
-            for day_str in days_list:  # 遍历整个 日期列表 ，查找该行的发布日期是否符合日期列表中内容
-                if bt_day_tag.text.find(day_str) == -1:  # 如果改行tr符合要查找的日期
-                    is_next_page = False
-        temp_num += 1
+    is_next_tr = True   # 是否下一行
 
     tr_num = 1  # 行号计数器，用于下面的for循环
-    for down_tr in down_tr_s:       # 遍历每一个 tr 标签
+    for down_tr in down_tr_s:  # 遍历每一个 tr 标签
         down_num_td = down_tr.find_element(By.XPATH, "./td[5]")  # 获取下载量td元素
         bt_title_tag = down_tr.find_element(By.XPATH, "./td[2]/h3/a")  # 获取种子title的a标签
         bt_day_tag = down_tr.find_element(By.XPATH, "./td[3]/div/span")  # 获取种子日期标签
@@ -212,11 +229,12 @@ def download_1_page_by_day_func(download_input, down_break, days_list):
             tr_num += 1
             continue
 
-        if (not down_break) and (("破解" or "破坏") in bt_title_tag.text):  # 如果标题包含破坏or破解，跳过该次循环
+        # 注意：这里的两个“破解”看上去相同，但是分别是 简体 和 繁体
+        if (not down_break) and (("破解" or "破坏" or "破壊" or "破解") in bt_title_tag.text):  # 如果标题包含破坏or破解，跳过该次循环
             tr_num += 1
             continue
 
-        down_num = int(down_num_td.text)     # 将str的下载量转换为int类型
+        down_num = int(down_num_td.text)  # 将str的下载量转换为int类型
         if down_num < download_input:       # 如果下载量低于标准，则跳过该次循环
             tr_num += 1
             continue
@@ -225,11 +243,10 @@ def download_1_page_by_day_func(download_input, down_break, days_list):
         for day_str in days_list:       # 遍历整个 日期列表 ，查找该行的发布日期是否符合日期列表中内容
             if bt_day_tag.text.find(day_str) != -1:       # 如果改行tr符合要查找的日期
                 is_include_the_day = True
-                tr_num += 1     # 如果tr符合日期，则 行号flag增加
+                tr_num += 1  # 如果tr符合日期，则 行号flag增加
                 break
         else:
-            tr_num += 1     # 如果tr找不到符合的日期，则 行号flag增加
-            continue
+            tr_num += 1
 
         if is_include_the_day:
             # 显示bt种子的详细信息
@@ -273,32 +290,25 @@ def download_1_page_by_day_func(download_input, down_break, days_list):
 
             print(f'{tr_num}----------{down_num_td.text}')  # 打印种子的真实下载数量
 
-    return is_next_page        # 返回 是否整页内容没有该日期的tr
 
 
+    return keep_next_page
 
-def download_by_day_func(download_input, down_break):
-    total_day_download = total_day_download_func()  # 该方法返回下载多少天的bt种子
 
-    days_list = list()      # 日期str的列表
-    # 给 list 中添加 日期str
-    if total_day_download >= 1:
-        days_list.append("今天")
-    if total_day_download >= 2:
-        days_list.append("昨天")
-    if total_day_download >= 3:
-        day_flag = -2
-        while -day_flag + 1 <= total_day_download:
-            day_now_temp = (datetime.today() + timedelta(day_flag)).strftime('%Y-%m-%d')
-            days_list.append(day_now_temp)
-            day_flag -= 1
+def download_by_days(download_input, down_break):
+    """
+    下载前？天的种子 函数
+    :param download_days: 下载前多少天
+    :param download_input:  下载量高于多少？
+    :param down_break: 是否下载破坏版？
+    """
+    download_days = get_download_days()  # 获取下载前?天的bt种子
+    days_list = get_days_list(download_days)   # 得到日期的list列表
 
-    # 本页是第几次
-    page_num = 1    # 目前页数
+    page_num = 1    # 目前的页数是多少？
 
     while True:
-        is_next_page = download_1_page_by_day_func(download_input, down_break, days_list)
-        print(is_next_page)
+        keep_next_page = download_by_days_1_page(download_input, down_break, days_list)
 
         page_input = driver.find_element(By.CSS_SELECTOR, 'a[class="w70"] input')
         page_num += 1
@@ -308,9 +318,15 @@ def download_by_day_func(download_input, down_break):
         page_input.send_keys(Keys.ENTER)
         time.sleep(5)
 
-        print(is_next_page)
-        if not is_next_page:
+
+        if not keep_next_page:      # 如果不继续，则打断本循环
             break
+
+
+
+
+
+
 
 # endregion    根据 页数 下载的方法: end
 
@@ -399,7 +415,7 @@ def main_func():
             break
         elif page_or_day_choice.strip() == "2":
             page_or_day = "2"
-            download_by_day_func(download_input, down_break)
+            download_by_days(download_input, down_break)
             break
         else:
             print('您的输入有误，请重新输入！！！')
