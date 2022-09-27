@@ -25,7 +25,6 @@ implicitly_time = 15  # 隐式等待时长
 sleep_time = 3  # 强制等待时长
 
 
-error_time = 3  # 在控制台输入错误后，等待的时长
 
 # web driver 驱动
 driver = webdriver.Chrome()
@@ -328,14 +327,8 @@ def download_by_days(download_input, down_break):
         page_input.send_keys(Keys.ENTER)
         time.sleep(5)
 
-
         if not keep_next_page:      # 如果不继续，则打断本循环
             break
-
-
-
-
-
 
 
 # endregion    根据 页数 下载的方法: end
@@ -433,4 +426,3 @@ def main_func():
 
 if __name__ == '__main__':
     main_func()
- 
