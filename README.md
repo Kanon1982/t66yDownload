@@ -14,7 +14,7 @@
 3. 本脚本是默认是`Chrome`浏览器，如需使用其他浏览器，请修改 `main.py` 第 `30` 行
    
    
-   [Web Driver下载使用说明地址](https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/)
+   [Web Driver下载地址](https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/)
    
    
    
