@@ -20,9 +20,7 @@ day_min = 1  # 最少下载天数(含该天数)
 day_max = 30  # 最多下载天数(含该天数)
 
 
-page_tr_max = 100  # 每页最多有多少行(tr)
-
-# 注意：等待时长不可以删除，否则会被网站发现是机器人，导致报错
+# 注意：等待时长不可以删除，否则会被网站发现是在爬虫，导致报错
 implicitly_time = 15  # 隐式等待时长
 sleep_time = 3  # 强制等待时长
 
@@ -94,7 +92,13 @@ def download_1_page_func(download_input, down_break):
 
             # 看标题a标签中是否包含"破解"或"破坏" 并且 是否设置过下载破解版，有则跳过该行，无则点击
             # 注意：这里的两个“破解”看上去相同，但是分别是 简体 和 繁体
-            if (not down_break) and (("破解" or "破坏" or "破壊" or "破解") in bt_title_tag.text):
+            # ("破解" or "破坏" or "破壊" or "破解")
+            if (not down_break) and (
+                "破解" in bt_title_tag.text or
+                "破坏" in bt_title_tag.text or
+                "破壊" in bt_title_tag.text or
+                "破解" in bt_title_tag.text
+            ):
                 continue
             else:
                 bt_title_tag.click()
@@ -230,7 +234,13 @@ def download_by_days_1_page(download_input, down_break, days_list):
             continue
 
         # 注意：这里的两个“破解”看上去相同，但是分别是 简体 和 繁体
-        if (not down_break) and (("破解" or "破坏" or "破壊" or "破解") in bt_title_tag.text):  # 如果标题包含破坏or破解，跳过该次循环
+        # ("破解" or "破坏" or "破壊" or "破解")
+        if (not down_break) and (
+            "破解" in bt_title_tag.text or
+            "破坏" in bt_title_tag.text or
+            "破壊" in bt_title_tag.text or
+            "破解" in bt_title_tag.text
+        ):  # 如果标题包含破坏or破解，跳过该次循环
             tr_num += 1
             continue
 
