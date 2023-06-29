@@ -4,17 +4,17 @@
 
 草榴社区：t66y.com
 
-本脚本根据 `视频的区域` 、`种子下载总量` 、 `论坛帖子的前多少页数` 、 `是否下载破坏版` 批量下载bt种子
+本脚本根据 `视频的区域分类` 、`种子下载总量` 、 `论坛帖子发布了多少天` 、 `是否下载破坏版` 批量下载bt种子
 
 使用前须知：
 
-1. 至少需要 `python 3.8`，以及 `selenium 4.4.3`
+1. 至少需要 `python 3.8.10`，以及 `selenium 4.4.3`
   
 2. 需要根据自己的浏览器的 `类型` 和 `版本` 下载相应的 `webdriver驱动`，并且放在python解释器的 `根目录`
 3. 本脚本是默认是`Chrome`浏览器，如需使用其他浏览器，请修改 `main.py` 第 `30` 行
    
    
-   [Web Driver下载地址](https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/)
+   [Web Driver下载地址](https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/)，下载链接在本链接页尾
    
    
    
