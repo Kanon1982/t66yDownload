@@ -136,7 +136,6 @@ def download_by_days_1_page(download_input, down_break, days_list):
         # print(bt_day_tag_title)
 
         # 注意：不可以跳过 Top-marks 字符串检验，否则会 极其极其慢 !!!
-        # if bt_day_tag.text.find("Top-marks") != -1 or down_num_td.text == '--' :
         # 因为 公告tr 下载量显示 '--' ，所以先判断下载量是否为 '--' ，
         # 然后，检验标题是否包含孙元素font (因为如果包含的话，说明该行tr是公告，不是种子)
         if down_num_td.text == '--' :
@@ -326,8 +325,5 @@ def main_func():
     # 进入下载方法
     download_by_days(download_input, down_break)
 
-
-
 if __name__ == '__main__':
     main_func()
-
