@@ -75,6 +75,7 @@ def get_download_days():
             print('您输入的并非数字，请重新输入！！！')
 
 
+
 def get_days_list(download_days):
     """
     根据 下载前?页 生成 时间列表
@@ -134,9 +135,11 @@ def download_by_days_1_page(download_input, down_break, days_list):
         # print(bt_day_tag.text)
         # print(bt_day_tag_title)
 
-        # 检验标题是否包含孙元素font (因为如果包含的话，说明该行tr是公告，不是种子)
         # 注意：不可以跳过 Top-marks 字符串检验，否则会 极其极其慢 !!!
-        if bt_day_tag.text.find("Top-marks") != -1:
+        # if bt_day_tag.text.find("Top-marks") != -1 or down_num_td.text == '--' :
+        # 因为 公告tr 下载量显示 '--' ，所以先判断下载量是否为 '--' ，
+        # 然后，检验标题是否包含孙元素font (因为如果包含的话，说明该行tr是公告，不是种子)
+        if down_num_td.text == '--' :
             if is_exist_element(bt_title_tag, "./descendant::font"):
                 print("含有font标签，本行为公告，跳过该行")
                 tr_num += 1
@@ -216,6 +219,8 @@ def download_by_days_1_page(download_input, down_break, days_list):
             print(f'{tr_num}----------{down_num_td.text}')  # 打印种子的真实下载数量
 
     return keep_next_page
+
+
 
 
 def download_by_days(download_input, down_break):
@@ -320,6 +325,8 @@ def main_func():
 
     # 进入下载方法
     download_by_days(download_input, down_break)
+
+
 
 if __name__ == '__main__':
     main_func()
