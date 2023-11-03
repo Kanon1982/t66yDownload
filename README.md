@@ -36,7 +36,8 @@
    # Chromium Edge浏览器
    driver = webdriver.Edge("这里写Edge WebDriver路径")
    ```
-   
+7. 网速快、延迟低的，用`v0.2.3-alpha`版本；
+   网速低、延迟高的，用`v0.2.2-alpha`版本。
    
 
 
