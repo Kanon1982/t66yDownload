@@ -20,17 +20,19 @@ day_min = 1  # 最少下载天数(含该天数)
 day_max = 30  # 最多下载天数(含该天数)
 
 # 注意：等待时长不可以 删除 或者 太小，否则会被网站发现是在爬虫，导致报错
-implicitly_time = 15  # 隐式等待时长
-sleep_time = 3  # 强制等待时长
+implicitly_time = 10  # 隐式等待时长
+sleep_time = 5  # 强制等待时长
 
 # 用来保存磁力的txt文件路径，可以根据自己需要进行修改
 magnet_dir = "c:/t66y.com.txt"
 # 磁力格式的开头
 magnet_begin = "magnet:?xt=urn:btih:"
 
-
 # web driver 驱动
-driver = webdriver.Chrome()
+options = webdriver.ChromeOptions()
+options.page_load_strategy = "eager"    # 将chrome设置成只加载html页面，并放弃加载样式表、图像和子帧
+
+driver = webdriver.Chrome(options=options)
 driver.get("https://t66y.com/index.php")  # 登录 t66y.com 主页
 
 
@@ -198,12 +200,14 @@ def download_by_days_1_page(download_input, down_break, days_list, is_download_b
             driver.switch_to.window(windows[-1])
 
             try:
-                driver.implicitly_wait(implicitly_time)
+                # 等待页面加载完成
                 time.sleep(sleep_time)
+
+                # 使用 JavaScript 代码停止页面加载
+                driver.execute_script("window.stop()")
+
                 click_ele_s = driver.find_elements(By.CSS_SELECTOR, 'a[href*="rmdown.com/link.php?hash="]')
                 click_ele_s[0].click()
-                driver.implicitly_wait(implicitly_time)
-                time.sleep(sleep_time)
             except Exception as e:
                 print("报错：", e)
                 windows = driver.window_handles
@@ -214,8 +218,11 @@ def download_by_days_1_page(download_input, down_break, days_list, is_download_b
             windows = driver.window_handles
             driver.switch_to.window(windows[-1])
 
-            driver.implicitly_wait(implicitly_time)
+            # 等待页面加载完成
             time.sleep(sleep_time)
+
+            # 使用 JavaScript 代码停止页面加载
+            driver.execute_script("window.stop()")
 
             # 根据 直接下载种子 or 复制磁力链接到文本 决定下一步
             if is_download_bt is True:              # 直接下载种子
@@ -379,4 +386,3 @@ def main_func():
 
 if __name__ == '__main__':
     main_func()
-
