@@ -19,7 +19,7 @@
 
 5. 如果选择`直接下载种子`需要暂时卸载迅雷(执行完脚本，再安装即可)，因为下载种子的时候，浏览器会调用外部的迅雷，导致程序卡死。
 
-6. 本脚本是默认是`Chrome`浏览器，如需使用其他浏览器，请修改 `main.py` 第 `33` 行
+6. 本脚本是默认是`Chrome`浏览器，如需使用其他浏览器，请修改 `main.py` 第 `32`和`35` 行
    
    
    [Web Driver下载地址](https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/)，下载链接在本链接页尾
