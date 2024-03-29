@@ -13,13 +13,11 @@
   
 2. 需要根据自己的浏览器的 `类型` 和 `版本` 下载相应的 `webdriver驱动`，并且放在python解释器的 `根目录`
 
-3. 如果，选择`保存磁力链接`，默认的磁力信息保存路径是 `c:/t66y.com.txt`，当然，也可以手动更改，请修改 `main.py` 第 `27` 行
+3. 如果，选择`保存磁力链接`，默认的磁力信息保存路径是 `c:/t66y.com.txt`，当然，也可以手动更改，请修改 `t66yDownload_chrome.py`或者 `t66yDownload_firefox.py` 第 `27` 行
    
 4. 需要 `全程外网` 环境(因为草榴只有在外网才可以访问)
 
 5. 如果选择`直接下载种子`需要暂时卸载迅雷(执行完脚本，再安装即可)，因为下载种子的时候，浏览器会调用外部的迅雷，导致程序卡死。
-
-6. 本脚本是默认是`Chrome`浏览器，如需使用其他浏览器，请修改 `main.py` 第 `32`和`35` 行
    
    
    [Web Driver下载地址](https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/)，下载链接在本链接页尾
@@ -36,8 +34,6 @@
    # Chromium Edge浏览器
    driver = webdriver.Edge("这里写Edge WebDriver路径")
    ```
-7. 网速快、延迟低的，用`v0.2.3-alpha`版本；
-   网速低、延迟高的，用`v0.2.2-alpha`版本。
    
 
 
