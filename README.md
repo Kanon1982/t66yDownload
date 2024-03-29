@@ -39,4 +39,4 @@
 
 
 
-使用时，使用`pycharm`运行main.py文件即可
+使用时，使用`pycharm`运行`t66yDownload_chrome.py`或者 `t66yDownload_firefox.py`文件中的 `main函数` 即可
