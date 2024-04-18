@@ -40,7 +40,8 @@
 
 
 使用时，使用`pycharm`运行`t66yDownload_chrome.py`或者 `t66yDownload_firefox.py`文件中的 `main函数`(main函数在py文件的末尾) 即可
-
+<br>
+<br>
 Tips:
   1. 新版本的Mozilla Firefox，下载种子文件的时候，默认会提示不安全
      如图：
