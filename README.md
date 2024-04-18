@@ -47,5 +47,5 @@ Tips:
      ![Firefox报错图片](https://github.com/Kanon1982/imgBed/blob/main/Snipaste_2024-04-18_15-17-54.png?raw=true)
      <br>
      解决办法如下：
-     (https://jingyan.baidu.com/article/48b558e335b7ac3e39c09a46.html)[https://jingyan.baidu.com/article/48b558e335b7ac3e39c09a46.html]
+     [https://jingyan.baidu.com/article/48b558e335b7ac3e39c09a46.html](https://jingyan.baidu.com/article/48b558e335b7ac3e39c09a46.html)
 
