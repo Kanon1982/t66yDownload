@@ -1,5 +1,5 @@
 <h2>草榴社区的爬虫脚本</h2>
-<h3>注意：firefox版本的暂时不可用，貌似是firefox的web driver有问题</h3>
+<h3>注意：firefox版本的暂时不可用，貌似是firefox的web driver有问题。请使用chrome版</h3>
 
 本脚本由 `python` 和 `selenium` 编写，
 
