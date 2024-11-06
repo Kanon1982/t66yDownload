@@ -1,3 +1,4 @@
+<h1><i>已废弃</i></h1>
 <h2>草榴社区的爬虫脚本</h2>
 <h3>注意：firefox版本的暂时不可用，貌似是firefox的web driver有问题。请使用chrome版</h3>
 
