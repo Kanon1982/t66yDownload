@@ -42,7 +42,7 @@
         ```bash
         python t66y_bt_crawler.py --forum 2 --pages 5 --min-dl 50 --days 2 --no-crack
         ```
-            |参数|说明|示例|
+            | 参数 | 说明 | 示例 |
             |--forum|板块编号 (1-6)，0=全部|--forum 2
             |--min-dl	|最低下载量	|--min-dl 50
             |--pages	|按页数爬取	|--pages 5
