@@ -1,6 +1,7 @@
 # 🍃 T66y Magnet Crawler (草榴社区磁力爬虫)
 
-中文教程 | ![English Tutorial](https://github.com/Kanon1982/T66y-Magnet-Crawler/blob/main/README_EN.md)
+[English](./README_EN.md) | 简体中文
+
 [![Python Version](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/)
@@ -28,7 +29,7 @@
 本项目要求 **Python 3.11** 或更高版本。
 
 ### 2. 安装依赖库
-项目依赖 `requests`、`beautifulsoup4` 和 `lxml`。可通过以下命令一键安装：
+项目依赖 `requests``beautifulsoup4` 和 `lxml`。可通过以下命令一键安装：
 
 ```bash
 pip install requests beautifulsoup4 lxml
