@@ -15,6 +15,7 @@
 <h4>1. 至少需要 `python>=3.11`</h4>
 
 <h4>2. 因为需要 `requests` `beautifulsoup4` `lxml` 这三个库进行安装，可以自行手动安装，或者图省事，也可以在python命令行中执行以下命令：</h4>
+
     ```python
      pip install requests beautifulsoup4 lxml
     ```
