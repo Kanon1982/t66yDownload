@@ -36,15 +36,15 @@
     <p></p>
     2. 运行该py脚本：<br>
     &nbsp;&nbsp;&nbsp;&nbsp; A. 交互式运行：<br>
-        ```bash
+        &nbsp;&nbsp;&nbsp;&nbsp;```bash
         python t66y_bt_crawler.py
-        ```
+        &nbsp;&nbsp;&nbsp;&nbsp;```
         <br>
 &nbsp;&nbsp;&nbsp;&nbsp;然后，按照提示进行输入<br>
 &nbsp;&nbsp;&nbsp;&nbsp;B. 命令行参数模式，跳过交互输入。直接用一条命令运行：<br>
-        ```bash
+        &nbsp;&nbsp;&nbsp;&nbsp;```bash
         python t66y_bt_crawler.py --forum 2 --pages 5 --min-dl 50 --days 2 --no-crack
-        ```
+        &nbsp;&nbsp;&nbsp;&nbsp;```
 
         
 | 参数 | 说明 | 示例 |
