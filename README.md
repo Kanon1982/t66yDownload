@@ -18,6 +18,7 @@
   ```python
    pip install requests beautifulsoup4 lxml
   ```
+<br>
 3. 如果在封闭地区，比如中国、伊朗、朝鲜、俄罗斯等地区，需要在爬虫过程中，`全程外网环境`。因为，草榴社区只有在外网环境，才可以访问。
 
 4. 磁力保存的路径，在项目的根路径下的magnets文件夹中 <br>
