@@ -1,5 +1,6 @@
 # 🍃 T66y Magnet Crawler (草榴社区磁力爬虫)
 
+中文教程 | ![English Tutorial](https://github.com/Kanon1982/T66y-Magnet-Crawler/blob/main/README_EN.md)
 [![Python Version](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/)
