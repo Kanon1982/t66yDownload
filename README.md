@@ -12,7 +12,7 @@
 
 使用前须知：
 
-1. 至少需要 `python 3.11`
+1. 至少需要 `python>=3.11`
 2. 因为需要 requests beautifulsoup4 lxml 这三个库进行导入，可以自行手动安装，或者图省事，可以在python命令行中执行以下命令：
   ```bash
    pip install requests beautifulsoup4 lxml
