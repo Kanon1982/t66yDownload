@@ -29,7 +29,7 @@
 本项目要求 **Python 3.11** 或更高版本。
 
 ### 2. 安装依赖库
-项目依赖 `requests``beautifulsoup4` 和 `lxml`。可通过以下命令一键安装：
+项目依赖 `requests` `beautifulsoup4` 和 `lxml`。可通过以下命令一键安装：
 
 ```bash
 pip install requests beautifulsoup4 lxml
