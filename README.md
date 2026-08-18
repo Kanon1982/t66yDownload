@@ -1,59 +1,97 @@
-<h1>草榴社区的爬虫脚本</h1>
+# 🍃 T66y Magnet Crawler (草榴社区磁力爬虫)
 
-本脚本由 `python` 编写，
+[![Python Version](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/)
 
-草榴社区：t66y.com
+基于 Python 3.11+ 开发的草榴社区（t66y.com）磁力链接高效爬取工具。支持按**版块分类**、**下载量筛选**、**发布时间过滤**以及**破解版过滤**等多种条件，精准提取并保存符合需求的磁力链接。
 
-本脚本根据 `视频的区域分类` 、`种子的下载总量` 、 `论坛帖子发布了多少天` 、 `是否下载破坏版` 的选项，保存磁力到项目路径
+> ⚠️ **重要提示**  
+> 本工具**仅支持提取与保存磁力链接（Magnet）**，无法直接下载 BT 种子文件（因社区站点包含反爬虫验证机制）。
 
-注意：只能保存磁力，不能下载bt种子，因为草榴社区，下载种子的话，有反爬机制 <br>
-注意：只能保存磁力，不能下载bt种子，因为草榴社区，下载种子的话，有反爬机制 <br>
-注意：只能保存磁力，不能下载bt种子，因为草榴社区，下载种子的话，有反爬机制 <br>
+---
 
-<h2>使用前须知：</h2>
+## ✨ 功能特性
 
-<h4>1. 至少需要 `python>=3.11`</h4>
+- **多维筛选**：支持按版块、最低下载量、发布天数/爬取页数灵活过滤。
+- **破解版过滤**：提供开关参数，可自由选择是否排除破解版资源。
+- **智能增量缓存**：自动记录已爬取内容（`crawler_record.json`），中断重新运行可自动跳过历史记录，避免重复爬取。
+- **多格式输出**：分类保存全量信息、筛选后的详细信息及纯净磁力列表，方便批量导入下载工具。
+- **双运行模式**：支持友好型终端交互模式与极客风格的 CLI 命令行参数模式。
 
-<h4>2. 因为需要 `requests` `beautifulsoup4` `lxml` 这三个库进行安装，可以自行手动安装，或者图省事，也可以在python命令行中执行以下命令：</h4>
+---
 
-    ```bash
-     pip install requests beautifulsoup4 lxml
-    ```
+## 📋 环境要求与依赖安装
 
-<h4>3. 如果在封闭地区，比如中国、伊朗、朝鲜、俄罗斯等地区，需要在爬虫过程中，`全程外网环境`。因为，草榴社区只有在外网环境，才可以访问。</h4>
+### 1. Python 环境
+本项目要求 **Python 3.11** 或更高版本。
 
-<h4>4. 磁力保存的路径，在项目的根路径下的magnets文件夹中 <br></h4>
-   其中，以 `all_magnets.txt`结尾的文件，是本次爬虫遇到的所有的磁力的信息的文件 <br>
-   其中，以 `magnets.txt`结尾的文件，是符合用户需求的磁力信息的文件。 <br>
-   其中，以 `pure_magnets.txt`结尾的文件，是符合用户需求的磁力的文件，不包含磁力的其他信息。 <br>
+### 2. 安装依赖库
+项目依赖 `requests`、`beautifulsoup4` 和 `lxml`。可通过以下命令一键安装：
 
+```bash
+pip install requests beautifulsoup4 lxml
+```
 
-<h4>5. 注意：</h4>
-   运行完该脚本之后，会在项目根路径下生成 `crawler_record.json` 文件，该文件是用来保存缓存的。<br>
-   缓存的作用：假如执行脚本过程中途忽然被停止，再次重新执行脚本的时候，就不会下载之前下载过的磁力文件了。<br>
-   如果想清除缓存，或者，从零开始保存磁力的话，直接删除 `crawler_record.json` 就好。
+---
 
+## 🌐 网络与环境说明
 
-<h2>如何运行：</h2><br>
-    <h3>1. 下载 `t66y_bt_crawler.py` 到本地，</h3>
-    <p></p><p></p>
-    <h3>2. 运行该py脚本：</h3><br>
-    &nbsp;&nbsp;&nbsp;&nbsp; A. 交互式运行：<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;```bash
-        python t66y_bt_crawler.py
-        &nbsp;&nbsp;&nbsp;&nbsp;```
-        <br>
-&nbsp;&nbsp;&nbsp;&nbsp;然后，按照提示进行输入<br><p></p>
-&nbsp;&nbsp;&nbsp;&nbsp;B. 命令行参数模式，跳过交互输入。直接用一条命令运行：<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;```bash
-        python t66y_bt_crawler.py --forum 2 --pages 5 --min-dl 50 --days 2 --no-crack
-        &nbsp;&nbsp;&nbsp;&nbsp;```
+草榴社区站点在部分地区（如中国大陆、伊朗、朝鲜、俄罗斯等）需要处于**全程代理/外网环境**下才可以正常访问。在运行脚本前，请确保终端/系统已正确配置网络代理。
 
-        
-| 参数 | 说明 | 示例 |
-| :--- | :--- | :--- |
-| `--forum` | 板块编号 (1-6)，0=全部 | `--forum 2` |
-| `--min-dl` | 最低下载量 | `--min-dl 50` |
-| `--pages` | 按页数爬取 | `--pages 5` |
-| `--days` | 按天数爬取（与 `--pages` 二选一） | `--days 2` |
-| `--no-crack` | 排除破解版（不加则包含） | `--no-crack` |
+---
+
+## 🚀 快速使用指南
+
+下载脚本 `t66y_bt_crawler.py` 到本地后，可通过以下两种方式之一运行：
+
+### 模式 A：交互式终端模式（推荐新手）
+直接运行脚本，根据命令行终端的提示逐步输入筛选参数：
+
+```bash
+python t66y_bt_crawler.py
+```
+
+### 模式 B：命令行参数模式（适合自动化/一键运行）
+跳过交互提示，直接通过命令行参数指定爬取规则：
+
+```bash
+python t66y_bt_crawler.py --forum 2 --pages 5 --min-dl 50 --days 2 --no-crack
+```
+
+#### ⚙️ CLI 参数说明表
+
+| 参数 | 说明 | 示例 | 默认值 / 备注 |
+| :--- | :--- | :--- | :--- |
+| `--forum` | 板块编号 (1-6)，`0` 表示全部板块 | `--forum 2` | `0` |
+| `--min-dl` | 最低种子下载量筛选 | `--min-dl 50` | `0` |
+| `--pages` | 爬取目标页数 | `--pages 5` | 与 `--days` 二选一 |
+| `--days` | 爬取最近 $N$ 天内发布的内容 | `--days 2` | 与 `--pages` 二选一 |
+| `--no-crack` | 排除破解版内容（若不加此参数则默认包含） | `--no-crack` | Flag 标记 |
+
+---
+
+## 📂 输出文件结构与断点续爬
+
+脚本运行后，会在项目根目录下自动创建 `magnets/` 文件夹，并生成以下三个目标文件：
+
+```text
+.
+├── t66y_bt_crawler.py
+├── crawler_record.json        # 爬取缓存记录文件
+└── magnets/                   # 磁力链接输出目录
+    ├── *_all_magnets.txt      # 本次爬取到的所有磁力信息汇总
+    ├── *_magnets.txt          # 匹配用户筛选条件的详细磁力信息
+    └── *_pure_magnets.txt     # 仅包含纯磁力链接（用于直接粘贴至 BitComet / Aria2 等下载器）
+```
+
+### 🔄 缓存机制与重置
+* 运行结束后生成的 `crawler_record.json` 用于记录已爬取过的帖子 ID。
+* **中断续传**：若运行中途中断或再次运行，脚本会自动读取该文件并跳过重复内容。
+* **彻底重置**：如果希望清除历史缓存、重新从零开始爬取，直接删除 `crawler_record.json` 即可。
+
+---
+
+## ⚖️ 免责声明 (Disclaimer)
+
+本脚本仅供 Python 网络爬虫技术学习与交流使用。请勿将本项目用于任何违反当地法律法规的用途。开发者不对使用者因违规行为导致的任何后果承担责任。
