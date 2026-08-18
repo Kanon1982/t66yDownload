@@ -32,13 +32,14 @@
    如果想清除缓存，或者，从零开始保存磁力的话，直接删除 `crawler_record.json` 就好。
 
 如何运行：
-    1. 下载 `t66y_bt_crawler.py` 到本地，
+    1. 下载 `t66y_bt_crawler.py` 到本地，<br>
         A. 交互式运行：
         ```bash
         python t66y_bt_crawler.py
         ```
-        然后，按照提示进行输入
-        B. 命令行参数模式，跳过交互输入。直接用一条命令运行：
+        <br>
+        然后，按照提示进行输入<br>
+        B. 命令行参数模式，跳过交互输入。直接用一条命令运行：<br>
         ```bash
         python t66y_bt_crawler.py --forum 2 --pages 5 --min-dl 50 --days 2 --no-crack
         ```
