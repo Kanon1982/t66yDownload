@@ -15,9 +15,9 @@
 1. 至少需要 `python>=3.11`
 
 2. 因为需要 `requests` `beautifulsoup4` `lxml` 这三个库进行安装，可以自行手动安装，或者图省事，也可以在python命令行中执行以下命令：
-  ```python
-   pip install requests beautifulsoup4 lxml
-  ```
+    ```python
+     pip install requests beautifulsoup4 lxml
+    ```
 
 3. 如果在封闭地区，比如中国、伊朗、朝鲜、俄罗斯等地区，需要在爬虫过程中，`全程外网环境`。因为，草榴社区只有在外网环境，才可以访问。
 
