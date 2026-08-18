@@ -33,15 +33,15 @@
 
 如何运行：<br>
     1. 下载 `t66y_bt_crawler.py` 到本地，
-    <br>
+    <p></p>
     2. 运行该py脚本：<br>
-        A. 交互式运行：<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; A. 交互式运行：<br>
         ```bash
         python t66y_bt_crawler.py
         ```
         <br>
-        然后，按照提示进行输入<br>
-        B. 命令行参数模式，跳过交互输入。直接用一条命令运行：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;然后，按照提示进行输入<br>
+&nbsp;&nbsp;&nbsp;&nbsp;B. 命令行参数模式，跳过交互输入。直接用一条命令运行：<br>
         ```bash
         python t66y_bt_crawler.py --forum 2 --pages 5 --min-dl 50 --days 2 --no-crack
         ```
