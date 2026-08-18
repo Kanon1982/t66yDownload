@@ -30,3 +30,23 @@
    运行完该脚本之后，会在项目根路径下生成 `crawler_record.json` 文件，该文件是用来保存缓存的。<br>
    缓存的作用：假如执行脚本过程中途忽然被停止，再次重新执行脚本的时候，就不会下载之前下载过的磁力文件了。<br>
    如果想清除缓存，或者，从零开始保存磁力的话，直接删除 `crawler_record.json` 就好。
+
+如何运行：
+    1. 下载 `t66y_bt_crawler.py` 到本地，
+        A. 交互式运行：
+        ```bash
+        python t66y_bt_crawler.py
+        ```
+        然后，按照提示进行输入
+        B. 命令行参数模式，跳过交互输入。直接用一条命令运行：
+        ```bash
+        python t66y_bt_crawler.py --forum 2 --pages 5 --min-dl 50 --days 2 --no-crack
+        ```
+            |参数|说明|示例|
+            |--forum|板块编号 (1-6)，0=全部|--forum 2
+            |--min-dl	|最低下载量	|--min-dl 50
+            |--pages	|按页数爬取	|--pages 5
+            |--days	|按天数爬取（与--pages二选一）	|--days 2
+            |--no-crack	|排除破解版（不加则包含）	|--no-crack
+                    
+                    
