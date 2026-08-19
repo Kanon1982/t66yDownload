@@ -45,20 +45,20 @@ pip install requests beautifulsoup4 lxml
 
 ## 🚀 快速使用指南
 
-下载脚本 `t66y_bt_crawler.py` 到本地后，可通过以下两种方式之一运行：
+下载脚本 `t66y_magnet_crawler.py` 到本地后，可通过以下两种方式之一运行：
 
 ### 模式 A：交互式终端模式（推荐新手）
 直接运行脚本，根据命令行终端的提示逐步输入筛选参数：
 
 ```bash
-python t66y_bt_crawler.py
+python t66y_magnet_crawler.py
 ```
 
 ### 模式 B：命令行参数模式（适合自动化/一键运行）
 跳过交互提示，直接通过命令行参数指定爬取规则：
 
 ```bash
-python t66y_bt_crawler.py --forum 2 --pages 5 --min-dl 50 --days 2 --no-crack
+python t66y_magnet_crawler.py --forum 2 --pages 5 --min-dl 50 --days 2 --no-crack
 ```
 
 #### ⚙️ CLI 参数说明表
@@ -79,7 +79,7 @@ python t66y_bt_crawler.py --forum 2 --pages 5 --min-dl 50 --days 2 --no-crack
 
 ```text
 .
-├── t66y_bt_crawler.py
+├── t66y_magnet_crawler.py
 ├── crawler_record.json        # 爬取缓存记录文件
 └── magnets/                   # 磁力链接输出目录
     ├── *_all_magnets.txt      # 本次爬取到的所有磁力信息汇总
