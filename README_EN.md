@@ -45,20 +45,20 @@ The target site (`t66y.com`) may be blocked or restricted in certain regions (e.
 
 ## 🚀 Quick Start
 
-Download `t66y_bt_crawler.py` to your local environment and choose one of the following execution modes:
+Download `t66y_magnet_crawler.py` to your local environment and choose one of the following execution modes:
 
 ### Mode A: Interactive Mode (Recommended for beginners)
 Run the script directly and follow the interactive terminal prompts:
 
 ```bash
-python t66y_bt_crawler.py
+python t66y_magnet_crawler.py
 ```
 
 ### Mode B: CLI Parameter Mode (For automation & scripting)
 Bypass interactive prompts and specify rules directly via command-line arguments:
 
 ```bash
-python t66y_bt_crawler.py --forum 2 --pages 5 --min-dl 50 --days 2 --no-crack
+python t66y_magnet_crawler.py --forum 2 --pages 5 --min-dl 50 --days 2 --no-crack
 ```
 
 #### ⚙️ Command-Line Arguments Reference
@@ -79,7 +79,7 @@ Upon execution, the script creates a `magnets/` directory in the project root co
 
 ```text
 .
-├── t66y_bt_crawler.py
+├── t66y_magnet_crawler.py
 ├── crawler_record.json        # Cache tracking file
 └── magnets/                   # Output folder for magnet links
     ├── *_all_magnets.txt      # All magnet links encountered during scraping
